@@ -1,0 +1,84 @@
+import React, { useEffect, useState } from 'react';
+import { Subject, of } from 'rxjs';
+import { map, scan, startWith, switchMap, take, delay } from 'rxjs/operators';
+import { ajax } from 'rxjs/ajax';
+
+import './App.css';
+import './styles.css'
+
+export interface IUser{
+  name:{
+    title: string;
+    first:string;
+    last: string;
+  }
+}
+const howManyPages = 10;
+const api = `https://randomuser.me/api/?results=${howManyPages}&seed=rx-react&nat=us&inc=name&noinfo`;
+const getName = (user:IUser) =>
+    `${user.name.title} ${user.name.first} ${user.name.last}`;
+
+// -------
+const actionMap = {
+    forward: +1,
+    back: -1,
+};
+const action$ = new Subject<string>();
+// the page in scan will accumulate the pages over time
+// NOTE: looks like startWith must be specified after scan method
+// scan: pageNo +1/-1 as a new page number
+// skip will start from pageNo +1/-1 and skip given number of pages
+// with skip=2 every 2nd page will be selected
+const skip = 1
+const page$ = action$.pipe(
+    scan((pageNo, action) => pageNo + (action==='forward'? 1 : -1), skip),
+    startWith(1)
+);
+const names$ = page$.pipe(
+    switchMap((pageNo) => ajax.getJSON(`${api}&page=${pageNo}`)),
+    map(({ users }) => users.map(getName))
+);
+
+const useObservable = (observable:Observable<IUser>) => {
+  const [state, setState] = useState();
+
+  useEffect(() => {
+      const subscription = observable.subscribe(setState);
+      return () => subscription.unsubscribe();
+  }, [observable]);
+
+  return state;
+};
+
+const getClassName = (item:string) => {
+  return item.match(/(\w+)/)?[0]
+}
+
+export const ListItem = ({ item }) => {
+  const m = item.match(/(\w+)\s*(.*)$/)
+  return (
+  <li key={item} className={getClassName(item)}>
+    <span className='li-title'>{m[1]}.</span><span className='li-name'>{m[2]}</span>
+    </li>
+  )
+}
+export const List = ({ items = [], loading = false }) => (
+    <ul className = { loading ? 'loading' : 'ul-container' }>{
+        items && items.map((item) => ( 
+          <ListItem key={`xx${item}`} item={item}/>
+        ))
+    }
+    </ul>
+);
+
+function App() {
+  const names = useObservable(names$);
+  return (
+    <div className="App">
+      <h1>RxJS with React</h1>
+      <List items={names} />
+    </div>
+  );
+}
+
+export default App;
