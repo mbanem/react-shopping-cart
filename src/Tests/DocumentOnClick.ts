@@ -1,14 +1,40 @@
-import { fromEvent } from 'rxjs';
-
+import { fromEvent, Subscription } from 'rxjs';
+import { message } from '../utils/Message';
+import { countObservable } from './CreateAndCallObservable';
 export const operatorFromFunction = (observable: any) => {
-	//return the original observable
+	// observable.subscribe((count: any) => console.log('count', count));
+	console.log(
+		'Log before subscribe kicks in\nfor a GIVEN observable\nand call countObservable 0..2'
+	);
+	countObservable.subscribe((value) => console.log(value));
+	console.log('then we continue with subscribe to the given observable');
 	return observable;
 };
+let docOnClickSubscription: Subscription;
 
-export const documentClick = () => {
-	fromEvent(document, 'click')
+export const documentOnClick = (
+	evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	msgRef: React.RefObject<HTMLDivElement>
+) => {
+	if (docOnClickSubscription) {
+		if (evt.ctrlKey) {
+			console.log('unsubscribed from document.onClick');
+			return docOnClickSubscription.unsubscribe();
+		} else {
+			console.log('document.onClick handler is already registered');
+			return null;
+		}
+	} else {
+		console.log(
+			'document.onclick handler registered\nnow clicking in body will render\nmouse coordinates'
+		);
+	}
+	docOnClickSubscription = fromEvent(document, 'click')
 		.pipe(operatorFromFunction) //our operator only passes the observable through
 		.subscribe((value: any) => {
-			console.log('value?', value);
+			if (docOnClickSubscription) {
+				console.log('pos (x,y) =', `(${value.x}, ${value.y})`);
+				message(msgRef, 'document.onClick (x,y) registered');
+			}
 		});
 };

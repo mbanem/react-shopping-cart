@@ -1,0 +1,40 @@
+.explanation {
+    width: 14.5rem;
+    margin-left: 3rem; // App: 20rem, explanation:16rem, margin-left: (20-14)/2
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 14pt;
+    color: navy;
+}
+
+.ul-container,
+.ul-container-numbers {
+    padding: 5px 1rem;
+    width: 10rem;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.ul-container-numbers {
+    text-align: left;
+    margin-left: 4rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 14pt;
+    color: navy;
+}
+
+.li-child {
+    font-family: Georgia, "Times New Roman", Times;
+    font-size: 12pt;
+    color: green;
+}
+
+.number-of-users {
+    color: green;
+    font: italic 13pt Georgia, Times New Roman;
+}
+
+.users-per-page {
+    width: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}

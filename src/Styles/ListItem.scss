@@ -1,0 +1,52 @@
+:root {
+    font-size: 25px;
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+li {
+    text-transform: capitalize;
+}
+
+.loading {
+    opacity: 0.5;
+}
+
+.li-item,
+.Mr,
+.Mrs,
+.Ms,
+.Miss {
+    font-size: 14pt;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.Mr {
+    color: black;
+}
+
+.Mrs {
+    color: green;
+}
+
+.Ms {
+    color: blue;
+}
+
+.Miss {
+    color: red;
+    font-style: italic;
+}
+
+.li-title {
+    display: inline-block;
+    width: 1.8rem;
+}
+
+.li-name {
+    color: black;
+}
