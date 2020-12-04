@@ -64,10 +64,15 @@ export const getName = ({ name }: IUser) =>
 // 	.getJSON<IResult>(api)
 // 	.pipe(map((data: IResult) => data.results.map(getName)));
 //   return names$
-
-const api = `https://randomuser.me/api/?results=5&seed=rx-react&nat=us&inc=name&noinfo`;
+let pageSize = 6;
+export const setFetchPageSize = (val: number) => {
+	pageSize = val;
+};
+export const getFetchPageSize = () => pageSize;
+const api = () =>
+	`https://randomuser.me/api/?results=${pageSize}&seed=rx-react&nat=us&inc=name&noinfo`;
 export const UsersObservable$ = page$.pipe(
-	switchMap((pageNo) => ajax.getJSON<IResult>(`${api}&page=${pageNo}`)),
+	switchMap((pageNo) => ajax.getJSON<IResult>(`${api()}&page=${pageNo}`)),
 	map(
 		(data) => data.results,
 		(error: any) => console.log('error', error)

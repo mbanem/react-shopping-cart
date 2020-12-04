@@ -1,10 +1,11 @@
 import { fromEvent, Observable } from 'rxjs';
+import { message } from '../utils/Message';
 
 const operatorA = (observable: Observable<any>) => {
 	observable.subscribe((value: any) => {
 		console.log(
-			`we subscribe to observable X by operatorA(X)\n
-       allowing operatorA to subscribe to X\n
+			`we subscribe to observable X by operatorA(X)
+       allowing operatorA to subscribe to X
        before returning observable X to us`,
 			value
 		);
@@ -13,11 +14,15 @@ const operatorA = (observable: Observable<any>) => {
 	return observable;
 };
 
-export const actBeforeOnClickA = () => {
-	const clickObservable = fromEvent(document, 'click').pipe(operatorA);
+export const actBeforeOnClickA = (
+	msg: string,
+	msgRef: React.RefObject<HTMLDivElement>
+) => {
+	const clickObservable = fromEvent(document, 'dblclick').pipe(operatorA);
 
 	clickObservable.subscribe((value) => {
 		console.log('Document onClick after operatorA is done', value);
+		message(msgRef, msg);
 	});
 };
 

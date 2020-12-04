@@ -49,7 +49,7 @@ div {
     border-radius: 6px;
     background-color: cornsilk;
     padding: 2px;
-    margin: 0 0 2rem 5px;
+    margin: 0 0 2px 5px;
     text-align: center;
     cursor: default;
     &:disabled,
@@ -99,9 +99,7 @@ div {
 
 .message-box {
     width: 13rem;
-    // position: absolute;
-    // top: 1rem;
-    // left: .5rem;
+    padding-left: 8px;
     background-color: cornsilk;
     border: 1px solid gray;
     border-radius: 5px;
