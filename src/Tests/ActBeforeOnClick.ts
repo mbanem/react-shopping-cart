@@ -1,4 +1,4 @@
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { message } from '../utils/Message';
 
 const operatorA = (observable: Observable<any>) => {
@@ -14,15 +14,31 @@ const operatorA = (observable: Observable<any>) => {
 	return observable;
 };
 
-export const actBeforeOnClickA = (
-	msg: string,
-	msgRef: React.RefObject<HTMLDivElement>
+let clickSubscription: Subscription;
+export const actBeforeA = (
+	evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	msgRef: React.RefObject<HTMLDivElement>,
+	msg: string
 ) => {
+	if (clickSubscription) {
+		if (evt.ctrlKey) {
+			console.log(msg);
+			return clickSubscription.unsubscribe();
+		} else {
+			console.log('actBeforeA handler is already registered');
+			return null;
+		}
+	} else {
+		console.log(
+			'actBeforeA handler registered\nnow clicking in body will render\nmouse coordinates'
+		);
+	}
+	message(msgRef, 'registered doc.onDblClick actBefore A & B');
 	const clickObservable = fromEvent(document, 'dblclick').pipe(operatorA);
 
-	clickObservable.subscribe((value) => {
+	clickSubscription = clickObservable.subscribe((value) => {
 		console.log('Document onClick after operatorA is done', value);
-		message(msgRef, msg);
+		message(msgRef, value);
 	});
 };
 
@@ -46,7 +62,7 @@ const operatorB = (observable: any): any => {
 	};
 	return newObservable;
 };
-export const actBeforeOnClickB = () => {
+export const actBeforeB = () => {
 	const clickB = fromEvent(document, 'click').pipe(operatorB);
 	clickB.subscribe((value) =>
 		console.log('onClick we get different value:', value)

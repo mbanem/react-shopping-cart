@@ -14,7 +14,8 @@ let docOnClickSubscription: Subscription;
 
 export const documentOnClick = (
 	evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-	msgRef: React.RefObject<HTMLDivElement>
+	msgRef: React.RefObject<HTMLDivElement>,
+	msg: string
 ) => {
 	if (docOnClickSubscription) {
 		if (evt.ctrlKey) {
@@ -25,9 +26,7 @@ export const documentOnClick = (
 			return null;
 		}
 	} else {
-		console.log(
-			'document.onclick handler registered\nnow clicking in body will render\nmouse coordinates'
-		);
+		message(msgRef, msg);
 	}
 	docOnClickSubscription = fromEvent(document, 'click')
 		.pipe(operatorFromFunction) //our operator only passes the observable through

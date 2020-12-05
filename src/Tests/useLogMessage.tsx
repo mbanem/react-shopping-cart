@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+// NOTE: did not have time to make it work
 export const useLogMessage = (message: string, shouldExecute: boolean) => {
 	const [result, setResult] = useState<string>('');
 	const [executing, setExecuting] = useState(false);
