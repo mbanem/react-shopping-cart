@@ -1,9 +1,9 @@
 import { ajax } from 'rxjs/ajax';
-import { IResult, IUser, IUserDetails } from './Interfaces';
+import { IResult, IUser, INameUser } from './Interfaces';
 import { Subject } from 'rxjs';
 import { map, scan, startWith, switchMap } from 'rxjs/operators';
 // import { Observable } from 'rxjs';
-export const getFullName = ({ title, first, last }: IUserDetails): string => {
+export const getFullName = ({ title, first, last }: IUser): string => {
 	return `${title} ${first} ${last}`;
 };
 // export const actionMap = {
@@ -25,7 +25,7 @@ export const page$ = action$.pipe(
 	startWith(1)
 );
 // return full user name with title
-export const getName = ({ name }: IUser) =>
+export const getName = ({ name }: INameUser) =>
 	`${name.title} ${name.first} ${name.last}`;
 
 // url to serve users
@@ -40,12 +40,12 @@ export const getName = ({ name }: IUser) =>
 // ): Observable<string[]> => {
 // 	const api = `https://randomuser.me/api/?results=${recordsPerPage}&seed=rx-react&nat=us&inc=name&noinfo`;
 
-// 	// query for data and maps them into an array of strings,
-// 	// i.e. array of full user names with title as an Observable<string[]>
-// 	//   const names$ = ajax
-// 	// 	.getJSON<IResult>(api)
-// 	// 	.pipe(map((data: IResult) => data.results.map(getName)));
-// 	//   return names$
+// query for data and maps them into an array of strings,
+// i.e. array of full user names with title as an Observable<string[]>
+//   const names$ = ajax
+// 	.getJSON<IResult>(api)
+// 	.pipe(map((data: IResult) => data.results.map(getName)));
+//   return names$
 // 	return page$.pipe(
 // 		switchMap((pageNo) => ajax.getJSON<IResult>(`${api}&page=${pageNo}`)),
 // 		map(
@@ -71,6 +71,21 @@ export const setFetchPageSize = (val: number) => {
 export const getFetchPageSize = () => pageSize;
 const api = () =>
 	`https://randomuser.me/api/?results=${pageSize}&seed=rx-react&nat=us&inc=name&noinfo`;
+
+// export const UsersObservable$ = page$.pipe
+// fetch(api())
+// 	.then((response) => response.json())
+// 	.then((data) =>
+// 		setState({
+// 			photos: data.photos.photo.map((x) => ({
+// 				farm: x.farm,
+// 				id: x.id,
+// 				secret: x.secret,
+// 				server: x.server,
+// 			})),
+// 		})
+// 	);
+
 export const UsersObservable$ = page$.pipe(
 	switchMap((pageNo) => ajax.getJSON<IResult>(`${api()}&page=${pageNo}`)),
 	map(
@@ -78,7 +93,6 @@ export const UsersObservable$ = page$.pipe(
 		(error: any) => console.log('error', error)
 	)
 );
-
 // export const UsersObservable$ = (pageSize: number): Observable<IUser[]> => {
 //   console.log('UsersObservable pageSize', pageSize);
 // 	const api = `https://randomuser.me/api/?results=${pageSize}&seed=rx-react&nat=us&inc=name&noinfo`;

@@ -5,7 +5,7 @@ export const getClassFromFullName = (item: string) => {
 	if (m && m[0]) return m[0];
 	return '';
 };
-export const userFullName = ({ name: { title, first, last } }: IUser) => {
+export const userFullName = ({ title, first, last }: IUser) => {
 	return `${title} ${first} ${last}`;
 };
 export const userClassName = (user: IUser) => {

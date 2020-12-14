@@ -2,7 +2,6 @@ import { fromEvent, Subscription } from 'rxjs';
 import { message } from '../utils/Message';
 import { countObservable } from './CreateAndCallObservable';
 export const operatorFromFunction = (observable: any) => {
-	// observable.subscribe((count: any) => console.log('count', count));
 	console.log(
 		'Log before subscribe kicks in\nfor a GIVEN observable\nand call countObservable 0..2'
 	);

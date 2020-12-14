@@ -3,7 +3,7 @@
 // In this case click observable is replaced by hi observable.
 
 import { fromEvent, of, Subscription } from 'rxjs';
-import { message } from '../utils/Message';
+// import { message } from '../utils/Message';
 
 let replaceSubscription: Subscription;
 export const replaceObservableOnClick = (

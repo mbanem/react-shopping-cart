@@ -1,36 +1,36 @@
-import { of } from 'rxjs';
-import { useObservable } from '../utils/UseObservable';
-import '../Styles/App.scss';
-import { arr } from '../Models/Arr';
-import { ListItem } from './ListItem';
+import { useEffect, useState } from 'react';
 import { IUser } from '../Models/Interfaces';
+import { ListItem } from './ListItem';
+import { fetchUsers } from '../utils/FetchUsers';
 import { userFullName } from '../utils/ClassAndUserName';
+import '../Styles/App.scss';
 import '../Styles/List.scss';
-import { useState } from 'react';
-import { action$ } from '../Models/UserNamesObservable';
-import { setFetchPageSize } from '../Models/UserNamesObservable';
 
 interface IProps {
-	users: IUser[];
 	children: string[];
 }
-
-export const List: React.FC<IProps> = ({ users, children }: IProps) => {
-	const numbers = useObservable(of(arr));
-	const [pSize, setPSize] = useState<string>('5');
+let pageSize = 5;
+let pageNumber = 1;
+export const getApi = () => {
+	return `https://randomuser.me/api/?results=${pageSize}&seed=rx-react&nat=us&inc=name&noinfo&page=${pageNumber}`;
+};
+export const List: React.FC<IProps> = ({ children }: IProps) => {
+	// const numbers = useObservable(of(arr));
+	const [pSize, setPSize] = useState<number>(5);
 	const [pageNo, setPageNo] = useState<number>(1);
+	const [users, setUsers] = useState<IUser[]>([]);
 
-	// const usersPPage = (evt: React.ChangeEvent<HTMLInputElement>) => {
-	// 	// const val = parseInt()
-	// 	setPSize(evt.target.value);
-	// };
-	const updateState = (delta: number) => {
-		const pageNumber = pageNo + delta;
+	useEffect(() => {
+		fetchUsers(setUsers);
+	}, []);
+	const getRequestedPage = (delta: number) => {
+		pageNumber = pageNo + delta;
 		setPageNo(pageNumber);
+		fetchUsers(setUsers);
 	};
-	const usersPerPage = () => {
-		const val = parseInt(pSize);
-		setFetchPageSize(val);
+	const setPageSize = (val: string) => {
+		pageSize = parseInt(val);
+		setPSize(pageSize);
 	};
 	return (
 		<>
@@ -40,9 +40,7 @@ export const List: React.FC<IProps> = ({ users, children }: IProps) => {
 					disabled={pageNo <= 1}
 					className='navigation-button'
 					onClick={() => {
-						usersPerPage();
-						updateState(-1);
-						action$.next('back');
+						getRequestedPage(-1);
 					}}
 				>
 					⇦
@@ -50,9 +48,7 @@ export const List: React.FC<IProps> = ({ users, children }: IProps) => {
 				<button
 					className='navigation-button'
 					onClick={() => {
-						usersPerPage();
-						updateState(1);
-						action$.next('forward');
+						getRequestedPage(1);
 					}}
 				>
 					⇨
@@ -66,7 +62,7 @@ export const List: React.FC<IProps> = ({ users, children }: IProps) => {
 					className='users-per-page'
 					type='text'
 					value={pSize}
-					onChange={(e) => setPSize(e.target.value)}
+					onChange={(e) => setPageSize(e.target.value)}
 				/>
 			</label>
 			<ul className='ul-container'>
@@ -87,10 +83,10 @@ export const List: React.FC<IProps> = ({ users, children }: IProps) => {
 				Numbers got via useObservable(of(arr)) where arr is loaded with random
 				numbers in a loop
 			</div>
-			<ul className='ul-container-numbers'>
+			{/* <ul className='ul-container-numbers'>
 				{numbers &&
 					numbers.map((number) => <li key={`tt${number}`}>{number}</li>)}
-			</ul>
+			</ul> */}
 		</>
 	);
 };
