@@ -1,0 +1,67 @@
+:root {
+    --height-sidebar: calc(100vh - 10rem);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas: "header" "main" "footer"; // stack vertically;  order is important
+    grid-template-rows: 5rem 1fr 5rem;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    & span {
+        display: inline-block;
+        margin-left: 5px;
+    }
+}
+
+header {
+    grid-area: header; // not necessary, just info
+    background-color: #203040;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+main {
+    grid-area: main; // not necessary
+}
+
+footer {
+    grid-area: footer; // not necessary
+    background-color: #203040;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main {
+    flex: 3 60rem;
+    // background-color: rgb(209, 209, 114);
+}
+
+.sidebar {
+    flex: 1 20rem;
+    align-items: stretch;
+    // background-color: rgb(149, 189, 224);
+}
