@@ -1,0 +1,27 @@
+.fancy-button {
+    position: absolute;
+    top: .5rem;
+    left: calc(45vw - 75px);
+    width: 150px;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 8px;
+    font-size: 14pt;
+    color: white;
+    background-color: gray;
+    ;
+    &:hover {
+        // color: yellow;
+        font-weight: bold;
+    }
+}
+
+.green {
+    color: white;
+    background-color: rgb(20, 163, 20);
+}
+
+.blue {
+    color: white;
+    background-color: rgb(24, 24, 150);
+}
