@@ -1,18 +1,26 @@
 import React from 'react';
-import { IProduct } from '../Models/Interfaces/Interfaces';
+import { IData } from '../Models/Interfaces/Interfaces';
 import { formatCurrency } from '../Utils/FormatCurrency';
 import '../Styles/App.scss';
 import '../Styles/Products.scss';
+/* parent should send data as <Products products={products} />
+   as interface is
+   export type IData = {
+     products: IProduct[];
+   };
+   so property name products is used at parent and
+   is destructured from IData at the child
+*/
 
-export const Products: React.FC<IProduct[]> = (products): JSX.Element => {
-	const arr: [string, IProduct][] = Object.entries(products);
-	console.log('products', products);
+export const Products: React.FC<IData> = ({ products }: IData): JSX.Element => {
+	// const arr: [string, IProduct][] = Object.entries(products);
+	// console.log('products', products);
 
 	return (
 		<div>
 			<ul className='products'>
-				{arr &&
-					arr.map(([_, product]) => (
+				{products &&
+					products.map((product) => (
 						<li key={product.id}>
 							<div className='product'>
 								<a href={`#${product.id}`}>

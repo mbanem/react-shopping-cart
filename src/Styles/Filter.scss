@@ -1,0 +1,25 @@
+.filter {
+    display: flex;
+    width: 80%;
+    justify-content: flex-end;
+    align-items: center;
+    padding-left: 1rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-bottom: 0.1rem #c0c0c0 solid;
+}
+
+.filter div {
+    flex: 1;
+}
+
+.filter-sort,
+.filter-size {
+    display: inline-block;
+    width: 16.2rem;
+    margin-left: 1rem;
+}
+
+.filter-size {
+    padding-left: 12px;
+}

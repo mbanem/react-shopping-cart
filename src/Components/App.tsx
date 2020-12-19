@@ -1,23 +1,39 @@
 // Feature 1
-import React from 'react';
-
+import React, { useState } from 'react';
+import { ValueType } from 'react-select';
 import '../Styles/App.scss';
-// import data from '../Models/data.json';
-import { IData } from '../Models/Interfaces/Interfaces';
+import { IData, IProduct } from '../Models/Interfaces/Interfaces';
 import { Products } from './Products';
+import { Filter } from './Filter';
 // const entries = [
 // 	{ size: ['XL', 'XXL'], sort: 'XL' },
 // 	{ size: ['M', 'XXL', 'XXL'], sort: 'XXL' },
 // ];
-export const App: React.FC<IData> = ({ products }: IData): JSX.Element => {
-	// const [state, setState] = useState<{
-	// 	size: string[];
-	// 	sort: string;
-	// }>({ size: ['M', 'XL', 'XXL'], sort: 'XL' });
-	// window.data = data;
-	// console.log('data.length, data', data as IProduct[]);
-	// console.log('data.products[0].description', products[0].description);
+interface TOption {
+	value: string;
+	label: string;
+}
+// -------------  The App ----------------
+export const App: React.FC<IData> = (data: IData): JSX.Element => {
+	const [state, setState] = useState<{
+		size: TOption['value'];
+		sort: TOption['value'];
+	}>({ size: '', sort: '' });
+	const [products, setProducts] = useState<IProduct[]>(data.products);
 
+	const sortProducts = (sort: ValueType<TOption, false>) => {};
+	const filterProductsBySize = (size: ValueType<TOption, false>) => {
+		console.log('size', size);
+		if (size && size.value) {
+			setProducts(
+				data.products.filter((product) => {
+					return product.availableSizes.includes(size.value);
+				})
+			);
+		} else {
+			setProducts(data.products);
+		}
+	};
 	return (
 		<div className='grid-container'>
 			<header>
@@ -25,7 +41,16 @@ export const App: React.FC<IData> = ({ products }: IData): JSX.Element => {
 			</header>
 			<main>
 				<div className='content'>
-					<div className='main'>{products && <Products {...products} />}</div>
+					<div className='main'>
+						<Filter
+							count={products.length}
+							size={state.size}
+							sort={state.sort}
+							filterProductsBySize={filterProductsBySize}
+							sortProducts={sortProducts}
+						/>
+						<Products products={products} />
+					</div>
 					<div className='sidebar'>Cart Items</div>
 				</div>
 			</main>

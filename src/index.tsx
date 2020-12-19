@@ -7,6 +7,7 @@ import data from './Models/data.json';
 
 // const jsonData: IData = JSON.parse(JSON.stringify(data));
 
+// console.log(data.products.length);
 ReactDOM.render(
 	<React.StrictMode>
 		<App {...data} />
