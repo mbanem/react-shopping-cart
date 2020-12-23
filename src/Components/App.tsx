@@ -16,22 +16,50 @@ interface TOption {
 // -------------  The App ----------------
 export const App: React.FC<IData> = (data: IData): JSX.Element => {
 	const [state, setState] = useState<{
+		products: IProduct[];
 		size: TOption['value'];
 		sort: TOption['value'];
-	}>({ size: '', sort: '' });
-	const [products, setProducts] = useState<IProduct[]>(data.products);
+	}>({ products: data.products, size: '', sort: '' });
+	// const [products, setProducts] = useState<IProduct[]>(data.products);
 
-	const sortProducts = (sort: ValueType<TOption, false>) => {};
-	const filterProductsBySize = (size: ValueType<TOption, false>) => {
-		console.log('size', size);
-		if (size && size.value) {
-			setProducts(
-				data.products.filter((product) => {
-					return product.availableSizes.includes(size.value);
-				})
-			);
+	const sortProducts = (value: ValueType<TOption, false>) => {
+		if (!value) {
+			setState({
+				...state,
+				// put in the same order as specified in the data json object
+				products: data.products.sort((a, b) => (a.id > b.id ? 1 : -1)),
+			});
 		} else {
-			setProducts(data.products);
+			const sort = (value as TOption).value;
+			setState({
+				...state,
+				products: data.products.sort((a, b) => {
+					return sort === 'lowest'
+						? a.price < b.price
+							? -1
+							: 1
+						: sort === 'highest'
+						? a.price > b.price
+							? -1
+							: 1
+						: a.id > b.id
+						? -1
+						: 1;
+				}),
+			});
+		}
+		// console.log('sort.value', sort, typeof sort);
+	};
+	const filterProductsBySize = (size: ValueType<TOption, false>) => {
+		if (size && size.value) {
+			setState({
+				...state,
+				products: data.products.filter((product) => {
+					return product.availableSizes.includes(size.value);
+				}),
+			});
+		} else {
+			setState({ ...state, products: data.products });
 		}
 	};
 	return (
@@ -43,13 +71,13 @@ export const App: React.FC<IData> = (data: IData): JSX.Element => {
 				<div className='content'>
 					<div className='main'>
 						<Filter
-							count={products.length}
+							count={state.products.length}
 							size={state.size}
 							sort={state.sort}
 							filterProductsBySize={filterProductsBySize}
 							sortProducts={sortProducts}
 						/>
-						<Products products={products} />
+						<Products products={state.products} />
 					</div>
 					<div className='sidebar'>Cart Items</div>
 				</div>

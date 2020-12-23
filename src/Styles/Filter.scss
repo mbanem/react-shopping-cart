@@ -1,25 +1,32 @@
 .filter {
     display: flex;
+    gap: 2rem;
     width: 80%;
-    justify-content: flex-end;
+    justify-content: left;
     align-items: center;
     padding-left: 1rem;
     margin: 0 auto;
     margin-top: 1rem;
     border-bottom: 0.1rem #c0c0c0 solid;
+    // background-color: yellow;
 }
 
-.filter div {
-    flex: 1;
-}
-
+// .filter div {
+//     flex: 1;
+//     // width: 250px;
+// }
 .filter-sort,
 .filter-size {
     display: inline-block;
-    width: 16.2rem;
-    margin-left: 1rem;
+    width: 28rem;
+    margin-left: .5rem;
+}
+
+.filter-result {
+    display: inline-block;
+    width: 27rem;
 }
 
 .filter-size {
-    padding-left: 12px;
+    margin-left: 12px;
 }

@@ -1,6 +1,6 @@
 {
     "products": [{
-            "id": "dress1",
+            "id": 1,
             "title": "Summer short dress",
             "image": "/images/dress1.jpg",
             "description": "Summer short dress",
@@ -8,7 +8,7 @@
             "availableSizes": ["M", "L"]
         },
         {
-            "id": "dress2",
+            "id": 2,
             "title": "Summer sport jacket",
             "image": "/images/dress2.jpg",
             "description": "Summer sport jacket",
@@ -16,7 +16,7 @@
             "availableSizes": ["L", "XL"]
         },
         {
-            "id": "dress3",
+            "id": 3,
             "title": "Summer light gown",
             "image": "/images/dress3.jpg",
             "description": "Summer light gown",
@@ -24,7 +24,7 @@
             "availableSizes": ["XS", "S", "M"]
         },
         {
-            "id": "dress4",
+            "id": 4,
             "title": "Light sunny dress",
             "image": "/images/dress4.jpg",
             "description": "Light dress for a hot day",
@@ -32,7 +32,7 @@
             "availableSizes": ["XL", "XXL"]
         },
         {
-            "id": "dress5",
+            "id": 5,
             "title": "Elegant and comfortable",
             "image": "/images/dress5.jpg",
             "description": "Elegant and comfortable",
@@ -40,7 +40,7 @@
             "availableSizes": ["S", "M", "L"]
         },
         {
-            "id": "dress6",
+            "id": 6,
             "title": "Light silky dress",
             "image": "/images/dress6.jpg",
             "description": "Light silky dress",
@@ -48,7 +48,7 @@
             "availableSizes": ["M", "L", "XL"]
         },
         {
-            "id": "dress7",
+            "id": 7,
             "title": "Light beauty dress",
             "image": "/images/dress7.jpg",
             "description": "Light beauty dress",
@@ -56,7 +56,7 @@
             "availableSizes": ["L", "XL", "XXL"]
         },
         {
-            "id": "dress8",
+            "id": 8,
             "title": "New Ency style",
             "image": "/images/dress8.jpg",
             "description": "New Ency style",
@@ -64,7 +64,7 @@
             "availableSizes": ["M", "XL"]
         },
         {
-            "id": "dress9",
+            "id": 9,
             "title": "Elegant summer dress",
             "image": "/images/dress9.webp",
             "description": "Elegant summer dress",
